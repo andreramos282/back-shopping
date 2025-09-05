@@ -5,6 +5,6 @@ const ProductSchema = new mongoose.Schema({
     price: { type: Number, required: true }
 })
 
-const ProductModel = mongoose.model("product", ProductSchema)
+const Product = mongoose.model("product", ProductSchema)
 
-export default ProductModel
+export default Product
