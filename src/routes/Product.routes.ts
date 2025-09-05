@@ -15,6 +15,21 @@ productRoutes.get(
 )
 
 productRoutes.get(
+    '/product/:id',
+    productController.getProduct.bind(productController)
+)
+
+productRoutes.put(
+    '/product/:id',
+    productController.updateProduct.bind(productController)
+)
+
+productRoutes.delete(
+    '/product/:id',
+    productController.deleteProduct.bind(productController)
+)
+
+productRoutes.get(
     '/',
     productController.__test__.bind(productController)
 )

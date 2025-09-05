@@ -35,6 +35,52 @@ class ProductController {
         }
     }
 
+    async getProduct(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            if (!id) {
+                res.status(400).json({ message: "params ID is required" })
+                return
+            }
+            const response = await this.productService.read(id)
+            res.status(200).json(response)
+        } catch (error: unknown) {
+            const errorMessage = getErrorMessage(error)
+            res.status(500).json({ message: errorMessage })
+        }
+    }
+
+    async updateProduct(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            const { name, price } = req.body
+            if (!id) {
+                res.status(400).json({ message: "params ID is required" })
+                return
+            }
+            await this.productService.update(id, { name: name, price: price })
+            res.status(200).json({ message: "product updated successfully" })
+        } catch (error: unknown) {
+            const errorMessage = getErrorMessage(error)
+            res.status(500).json({ message: errorMessage })
+        }
+    }
+
+    async deleteProduct(req: Request, res: Response) {
+        try {
+            const { id } = req.params
+            if (!id) {
+                res.status(400).json({ message: "params ID is required" })
+                return
+            }
+            await this.productService.delete(id)
+            res.status(200).json({ message: "product deleted successfully" })
+        } catch (error: unknown) {
+            const errorMessage = getErrorMessage(error)
+            res.status(500).json({ message: errorMessage })
+        }
+    }
+
     async __test__(_: Request, res: Response) {
         try {
             res.status(200).json({ message: "funcionando!" })

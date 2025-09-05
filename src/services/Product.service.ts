@@ -17,9 +17,9 @@ class ProductService {
         return { products };
     }
 
-    async read(name: string) {
-        const products = await ProductModel.find({ name });
-        return { products };
+    async read(id: string) {
+        const product = await ProductModel.findById(id);
+        return { product };
     }
 
     async update(id: string, newProduct: ProductToUpdate) {
