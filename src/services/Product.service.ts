@@ -1,5 +1,5 @@
 import ProductType from "../types/Product.type";
-import ProductModel from "../model/Product.model"
+import ProductModel from "../model/Product.model";
 import ProductToUpdate from "../types/ProductToUpdate.type";
 
 class ProductService {
@@ -7,37 +7,36 @@ class ProductService {
         const newProduct = new ProductModel({
             name: product.name,
             price: product.price
-        })
-        return await newProduct.save()
+        });
+        const savedProduct = await newProduct.save();
+        return savedProduct;
     }
 
     async readAll() {
-        const limit = 10
-        const products = await ProductModel.find().sort({ createdAt: -1 }).limit(limit)
-        return { products: products }
+        const products = await ProductModel.find();
+        return { products };
     }
 
     async read(name: string) {
-        const limit = 10
-        const products = await ProductModel.find({ name: name }).sort({ createdAt: -1 }).limit(limit)
-        return { products: products }
+        const products = await ProductModel.find({ name });
+        return { products };
     }
 
     async update(id: string, newProduct: ProductToUpdate) {
-        const updatedProduct = await ProductModel.findByIdAndUpdate(id, newProduct)
+        const updatedProduct = await ProductModel.findByIdAndUpdate(id, newProduct, { new: true });
         if (!updatedProduct) {
-            throw new Error("Error in update product")
+            throw new Error(`Error updating product with id ${id}`);
         }
-        return updatedProduct
+        return updatedProduct;
     }
 
     async delete(id: string) {
-        const deletedProduct = await ProductModel.findByIdAndDelete(id)
+        const deletedProduct = await ProductModel.findByIdAndDelete(id);
         if (!deletedProduct) {
-            throw new Error("Error in delete product")
+            throw new Error(`Error deleting product with id ${id}`);
         }
-        return deletedProduct
+        return deletedProduct;
     }
 }
 
-export default ProductService
+export default ProductService;
